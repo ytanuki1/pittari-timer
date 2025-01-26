@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ストップウォッチ</title>
+    <style>
+        body {
+            background-color: white; /* 背景色を白に設定 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            overflow: hidden; /* 背景が画面を超えて表示されないように */
+        }
+
+        .stopwatch {
+            font-size: 470px;
+            font-family: "Graduate", serif; /* フォント設定「Graduate」から選択可能 */
+            color: black; /* カウントの文字色を黒に設定 */
+            position: relative; /* 時計の表示を前面に配置 */
+            z-index: 10;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2px;
+        }
+
+        .button {
+            font-size: 20px;
+            margin: 10px; /* ボタン間のスペースを追加 */
+            padding: 10px 10px; /* ボタンの大きさを調整 */
+            cursor: pointer;
+        }
+
+        .start-stop {
+            font-size: 80px; /* スタート/ストップボタンの大きさ調整 */
+            padding-left: 350px;
+            padding-right: 350px;
+            padding-top: 65px;
+            padding-bottom: 65px;
+            background-color: rgba(234, 234, 234, 0.695)
+        }
+
+        .reset {
+            font-size: 20px; /* リセットボタンの大きさ調整 */
+        }
+    </style>
+    <!googleフォントからフォントを入手>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <div class="stopwatch" id="display">0.00</div>
+        <div class="button-container">
+            <button class="button start-stop" onclick="startStop()">Stop</button>
+            <button class="button reset" onclick="resetStop()">リセット</button>
+        </div>
+    </div>
+
+    <script>
+        let timer;
+        let seconds = 0;
+        let isRunning = false;
+        const targetTime = 4.95; // 指定する秒数
+        const tolerance = 0.05; // 許容範囲（±秒）
+
+        function startStop() {
+            if (isRunning) {
+                clearInterval(timer);
+                // 秒数が指定した秒数±0.01秒の範囲内なら背景を変更
+                if (Math.abs(seconds - targetTime) <= tolerance) {
+                    // 動画を背景として設定
+                    const videoElement = document.createElement('video');
+                    videoElement.src = 'https://i.imgur.com/CtICfUO.mp4'; // 背景動画のURL
+                    videoElement.autoplay = true;
+                    videoElement.loop = true;
+                    videoElement.muted = true;
+                    videoElement.style.position = 'absolute';
+                    videoElement.style.top = '0';
+                    videoElement.style.left = '0';
+                    videoElement.style.width = '100%';
+                    videoElement.style.height = '100%';
+                    videoElement.style.objectFit = 'cover'; // 画面全体にフィット
+                    videoElement.style.zIndex = '-1'; // 動画が背景に配置されるように
+                    document.body.appendChild(videoElement);
+                }
+            } else {
+                timer = setInterval(function () {
+                    seconds += 0.01;
+                    document.getElementById("display").innerText = seconds.toFixed(2);
+                }, 10);
+            }
+            isRunning = !isRunning;
+        }
+
+        function resetStop() {
+            clearInterval(timer);
+            seconds = 0;
+            document.getElementById("display").innerText = "0.00";
+            // 背景動画を元に戻す
+            document.body.style.backgroundImage = "";
+            document.body.style.backgroundColor = "white"; // 背景色を元に戻す
+            // 背景動画を削除
+            const videoElements = document.querySelectorAll('video');
+            videoElements.forEach(video => video.remove());
+            isRunning = false;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クイズ効果音アプリ</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .button {
+            font-size: 3rem;
+            padding: 20px 40px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .button:hover {
+            transform: scale(1.1);
+        }
+        .circle-button {
+            color: red;
+            margin-right: 50px;
+            font-size: 500px;
+            font-weight: 999;
+        }
+        .cross-button {
+            color: blue;
+            margin-left: 50px;
+            font-size: 550px;
+            font-weight: 99;
+            margin-top: 140px;
+        }
+        .title {
+            color: rgb(0, 0, 0);
+            margin-right: 50px;
+            font-size: 50px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+       <button class="button circle-button" id="correctButton">◯</button>
+    　　<button class="button cross-button" id="incorrectButton">✕</button>
+    
+    <script>
+        document.getElementById("correctButton").onclick = function() {
+            var correctSound = new Audio("https://tadanote.tokyo/wp-content/uploads/2020/02/correct001.mp3");
+            correctSound.play();
+        };
+
+        document.getElementById("incorrectButton").onclick = function() {
+            var incorrectSound = new Audio("https://arspark.jp/material/wp-content/uploads/2023/04/arsnd_00017_fuseikai.mp3");
+            incorrectSound.play();
+        };
+    </script>
+
+</body>
+</html>

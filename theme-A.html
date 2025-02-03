@@ -48,14 +48,13 @@
 </head>
 <body>
     <div class="container">
-        <iframe src="https://docs.google.com/presentation/d/1hfS42aJK4xjuP3IgKLor85TQBnkpbxDPYirvByEu5O0/embed?rm=minimal" allowfullscreen></iframe> /* ここにスライドのURLを貼り付ける */
+        <iframe src="https://docs.google.com/presentation/d/1hfS42aJK4xjuP3IgKLor85TQBnkpbxDPYirvByEu5O0/embed?rm=minimal" allowfullscreen></iframe>
         <div class="countdown" id="countdown">90</div>
         <div class="buttons">
             <button onclick="startCountdown()">スタート</button>
             <button onclick="resetCountdown()">リセット</button>
         </div>
     </div>
-
     <script>
         let countdownTime = 90;
         let countdownInterval;
@@ -68,6 +67,11 @@
                     if (countdownTime > 0) {
                         countdownTime--;
                         document.getElementById("countdown").textContent = countdownTime;
+
+                        // もし残り時間が10秒未満なら文字色を赤にする
+                        if (countdownTime <= 20) {
+                            document.getElementById("countdown").style.color = "red";
+                        }
                     } else {
                         clearInterval(countdownInterval);
                         countdownRunning = false;
@@ -80,6 +84,7 @@
             clearInterval(countdownInterval);
             countdownTime = 90;
             document.getElementById("countdown").textContent = countdownTime;
+            document.getElementById("countdown").style.color = "black"; // リセット時に文字色を元に戻す
             countdownRunning = false;
         }
     </script>

@@ -58,15 +58,15 @@ websocket.onerror = (error) => {
  
  
 document.getElementById('trueBtn').addEventListener('click', () => {
-  websocket.send('true');
+  ws.send('true');
 });
  
 document.getElementById('falseBtn').addEventListener('click', () => {
-  websocket.send('false');
+  ws.send('false');
 });
  
 document.getElementById('skipBtn').addEventListener('click', () => {
-  websocket.send('skip');
+  ws.send('skip');
 });
 </script>
  

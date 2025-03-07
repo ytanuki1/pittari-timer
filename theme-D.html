@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ジェスチャー テーマ D</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .countdown {
+            position: absolute;
+            top: 0px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0);
+            color: rgb(0, 0, 0);
+            font-size: 300px;
+            padding: 5px;
+            border-radius: 8px;
+            text-shadow:7px 7px 0 #424242, -7px -7px 0 #424242,
+              -7px 7px 0 #424242, 7px -7px 0 #424242,
+              0px 7px 0 #424242,  0 -7px 0 #424242,
+              -7px 0 0 #424242, 7px 0 0 #424242;
+        }
+        .buttons {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+        .buttons button {
+            font-size: 14px;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <iframe src="https://docs.google.com/presentation/d/1hfS42aJK4xjuP3IgKLor85TQBnkpbxDPYirvByEu5O0/embed?rm=minimal" allowfullscreen></iframe>
+        <div class="countdown" id="countdown">90</div>
+        <div class="buttons">
+            <button onclick="startCountdown()">スタート</button>
+            <button onclick="resetCountdown()">リセット</button>
+        </div>
+    </div>
+    <script>
+        let countdownTime = 90;
+        let countdownInterval;
+        let countdownRunning = false;
+
+        function startCountdown() {
+            if (!countdownRunning) {
+                countdownRunning = true;
+                countdownInterval = setInterval(() => {
+                    if (countdownTime > 0) {
+                        countdownTime--;
+                        document.getElementById("countdown").textContent = countdownTime;
+
+                        // もし残り時間が10秒未満なら文字色を赤にする
+                        if (countdownTime <= 20) {
+                            document.getElementById("countdown").style.color = "red";
+                        }
+                    } else {
+                        clearInterval(countdownInterval);
+                        countdownRunning = false;
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetCountdown() {
+            clearInterval(countdownInterval);
+            countdownTime = 90;
+            document.getElementById("countdown").textContent = countdownTime;
+            document.getElementById("countdown").style.color = "black"; // リセット時に文字色を元に戻す
+            countdownRunning = false;
+        }
+    </script>
+</body>
+</html>

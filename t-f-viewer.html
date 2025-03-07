@@ -19,7 +19,8 @@ button { margin: 10px; padding: 10px 20px; }
 <button id="skipBtn">▷</button>
  
 <script>
-const websocket = new WebSocket('wss://websocket.in/t-f-view'); // websocket.in を使用
+ // WS接続（Achexへ接続）
+const websocket = new WebSocket('wss://cloud.achex.ca/t-f-viewer'); // websocket.in を使用
  
 websocket.onopen = () => {
   console.log('Connected to WebSocket');

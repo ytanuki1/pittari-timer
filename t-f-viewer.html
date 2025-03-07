@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>T/F Viewer</title>
+<style>
+body { font-family: sans-serif; }
+#display { font-size: 2em; }
+button { margin: 10px; padding: 10px 20px; }
+</style>
+</head>
+<body>
+ 
+<h1>WebSocket Test</h1>
+ 
+<div id="display"></div>
+ 
+<button id="trueBtn">○</button>
+<button id="falseBtn">✕</button>
+<button id="skipBtn">▷</button>
+ 
+<script>
+const websocket = new WebSocket('wss://websocket.in'); // websocket.in を使用
+ 
+websocket.onopen = () => {
+  console.log('Connected to WebSocket');
+};
+ 
+websocket.onmessage = (event) => {
+  const message = event.data;
+  const display = document.getElementById('display');
+ 
+  let symbol = '';
+  let duration = 1000; // 1秒
+ 
+  if (message === 'true') {
+    symbol = '○';
+  } else if (message === 'false') {
+    symbol = '✕';
+  } else if (message === 'skip') {
+    symbol = '▷▷';
+  } else {
+    console.log('Unknown message:', message);
+    return;
+  }
+ 
+  display.textContent = symbol;
+  setTimeout(() => { display.textContent = ''; }, duration);
+};
+ 
+websocket.onclose = () => {
+  console.log('Disconnected from WebSocket');
+};
+ 
+websocket.onerror = (error) => {
+  console.error('WebSocket error:', error);
+};
+ 
+ 
+document.getElementById('trueBtn').addEventListener('click', () => {
+  websocket.send('true');
+});
+ 
+document.getElementById('falseBtn').addEventListener('click', () => {
+  websocket.send('false');
+});
+ 
+document.getElementById('skipBtn').addEventListener('click', () => {
+  websocket.send('skip');
+});
+</script>
+ 
+</body>
+</html>
